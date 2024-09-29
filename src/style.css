@@ -1,0 +1,23 @@
+#grid-container{
+    display: grid;
+    grid-template-areas: 
+    'header header'
+    'sidebar main-content'
+    ;
+    grid-template-columns: 1fr 3fr;
+}
+#header{
+    grid-area: header;
+}
+
+#sidebar{
+    grid-area: sidebar;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+#main-content{
+    grid-area: main-content;
+}

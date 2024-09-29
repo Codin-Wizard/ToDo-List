@@ -8,4 +8,6 @@ const myTodo = new CreateTodos('Dette','gjøre ferdifg','02/10/2025','');
 
 
 project.addTodo(myTodo)
+
+project.displayProject();
 console.log(project.showTodos()); 
