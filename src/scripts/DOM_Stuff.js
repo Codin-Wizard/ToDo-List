@@ -1,8 +1,41 @@
+export function newProjectUI() {
+    const createNewProject = document.getElementsByClassName('new-project');
 
 
+}
 
 
+function createOverlayFor(popup){
+    //Lager en grå overlay for å sette detaljer i fokus
+    const overlay = document.createElement('div');
+    overlay.id = 'overlay';
 
+
+    overlay.addEventListener('click', () => {
+        document.body.removeChild(popup)
+        document.body.removeChild(overlay);
+    })
+
+    // Append the overlay to the body
+    document.body.appendChild(overlay);
+
+    return overlay;
+
+}
+
+//Lager en knapp i detalje
+function exitPopup(popup) {
+    const exitButton = document.createElement('button');
+    exitButton.textContent = 'CANCEL';
+
+    exitButton.addEventListener('click', () => {
+        const overlay = document.getElementById('overlay');
+        document.body.removeChild(popup)
+        document.body.removeChild(overlay)
+    })
+
+    return exitButton;
+}
 //En funkjson til å se details i hver todo
 function viewDetails(todo) {
     const viewDetailsButton = document.createElement('button');
@@ -12,26 +45,12 @@ function viewDetails(todo) {
         const details = document.createElement('div');
         details.classList.add('details');
         details.textContent = `Todo: ${todo.title}, Description: ${todo.description}, ${todo.calcDueDate()}`
+      
+        createOverlayFor(details);
 
-        //Lager en grå overlay for å sette detaljer i fokus
-        const overlay = document.createElement('div');
-        overlay.id = 'overlay';
+        details.append(exitPopup(details))
 
-        const exitDetails = document.createElement('button');
-        exitDetails.textContent = 'CANCEL';
-        exitDetails.addEventListener('click', () => {
-            body.removeChild(details)
-            body.removeChild(overlay)
-        })
-        overlay.addEventListener('click', () => {
-            body.removeChild(details)
-            body.removeChild(overlay)
-        })
-        details.append(exitDetails)
-
-        const body = document.querySelector('body');
-
-        body.append(details, overlay)
+        document.body.append(details)
     })
     return viewDetailsButton;
 }
