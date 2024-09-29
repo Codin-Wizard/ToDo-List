@@ -1,3 +1,9 @@
+
+
+
+
+
+//En funkjson til å se details i hver todo
 function viewDetails(todo) {
     const viewDetailsButton = document.createElement('button');
     viewDetailsButton.textContent = 'VIEW DETAILS';
@@ -7,16 +13,25 @@ function viewDetails(todo) {
         details.classList.add('details');
         details.textContent = `Todo: ${todo.title}, Description: ${todo.description}, ${todo.calcDueDate()}`
 
+        //Lager en grå overlay for å sette detaljer i fokus
+        const overlay = document.createElement('div');
+        overlay.id = 'overlay';
+
         const exitDetails = document.createElement('button');
         exitDetails.textContent = 'CANCEL';
         exitDetails.addEventListener('click', () => {
             body.removeChild(details)
+            body.removeChild(overlay)
         })
-
+        overlay.addEventListener('click', () => {
+            body.removeChild(details)
+            body.removeChild(overlay)
+        })
         details.append(exitDetails)
+
         const body = document.querySelector('body');
 
-        body.append(details)
+        body.append(details, overlay)
     })
     return viewDetailsButton;
 }
@@ -34,6 +49,7 @@ export function renderProjectToDOM(project) {
 
     // Iterate over todos and create list items
     project.todos.forEach(todo => {
+        //Kaller funksjon til å se detaljer
         const detailsButton = viewDetails(todo);
         const todoItem = document.createElement('li');
         todoItem.textContent = `Todo: ${todo.title}, Description: ${todo.description}`;
