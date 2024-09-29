@@ -5,4 +5,6 @@ Eg føle og at dette kan se bra ut på cven så jeg skal holde på med dette til
 
 
 
-Antall time counter (Oppdater etter hver økt): 2
+Antall time counter (Oppdater etter hver økt): 3
+
+Til neste gang: fortsett med ui til åp lage nye prosjekter

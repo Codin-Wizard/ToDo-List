@@ -1,41 +1,19 @@
 export function newProjectUI() {
-    const createNewProject = document.getElementsByClassName('new-project');
+    const createNewProjectButton = document.getElementsByClassName('new-project');
 
+    createNewProjectButton.addEventListener('click', () => {
+        const createNewProject = document.createElement('div');
+        createNewProject.classList.add('details');
+        createNewProject.textContent = 'Create a new project'
 
-}
+        createOverlayFor(createNewProject)
 
+        createNewProject.append(exitPopup(details))
 
-function createOverlayFor(popup){
-    //Lager en grå overlay for å sette detaljer i fokus
-    const overlay = document.createElement('div');
-    overlay.id = 'overlay';
-
-
-    overlay.addEventListener('click', () => {
-        document.body.removeChild(popup)
-        document.body.removeChild(overlay);
+        document.body.append(createNewProject)
     })
-
-    // Append the overlay to the body
-    document.body.appendChild(overlay);
-
-    return overlay;
-
 }
 
-//Lager en knapp i detalje
-function exitPopup(popup) {
-    const exitButton = document.createElement('button');
-    exitButton.textContent = 'CANCEL';
-
-    exitButton.addEventListener('click', () => {
-        const overlay = document.getElementById('overlay');
-        document.body.removeChild(popup)
-        document.body.removeChild(overlay)
-    })
-
-    return exitButton;
-}
 //En funkjson til å se details i hver todo
 function viewDetails(todo) {
     const viewDetailsButton = document.createElement('button');
@@ -84,4 +62,36 @@ export function appendProjectToDOM(project) {
     const main = document.getElementById('main-content'); // Get the main-content element
     const projectElement = renderProjectToDOM(project);  // Render project HTML
     main.appendChild(projectElement);  // Append to DOM
+}
+
+function createOverlayFor(popup){
+    //Lager en grå overlay for å sette detaljer i fokus
+    const overlay = document.createElement('div');
+    overlay.id = 'overlay';
+
+
+    overlay.addEventListener('click', () => {
+        document.body.removeChild(popup)
+        document.body.removeChild(overlay);
+    })
+
+    // Append the overlay to the body
+    document.body.appendChild(overlay);
+
+    return overlay;
+
+}
+
+//Lager en knapp i detalje
+function exitPopup(popup) {
+    const exitButton = document.createElement('button');
+    exitButton.textContent = 'CANCEL';
+
+    exitButton.addEventListener('click', () => {
+        const overlay = document.getElementById('overlay');
+        document.body.removeChild(popup)
+        document.body.removeChild(overlay)
+    })
+
+    return exitButton;
 }
