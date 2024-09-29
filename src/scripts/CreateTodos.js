@@ -13,7 +13,7 @@ export default class CreateTodos {
         return `The title is ${title}, and text is ${description}`;
     }
 
-    CalcDueDate() {
+    calcDueDate() {
         const currentDay = new Date(); //Dagens dato
         const dueDate = new Date(this.dueDate); //Antar at duedate er i framtiden
 
