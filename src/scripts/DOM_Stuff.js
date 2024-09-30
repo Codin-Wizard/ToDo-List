@@ -1,5 +1,5 @@
 export function newProjectUI() {
-    const createNewProjectButton = document.getElementsByClassName('new-project');
+    const createNewProjectButton = document.getElementById('new-project');
 
     createNewProjectButton.addEventListener('click', () => {
         const createNewProject = document.createElement('div');
@@ -8,10 +8,15 @@ export function newProjectUI() {
 
         createOverlayFor(createNewProject)
 
-        createNewProject.append(exitPopup(details))
+        const newProjectName = document.createElement('input');
+        newProjectName.type = 'text';
+        newProjectName.placeholder = 'Project name';
+
+        createNewProject.append(newProjectName,exitPopup(createNewProject))
 
         document.body.append(createNewProject)
     })
+    return createNewProjectButton
 }
 
 //En funkjson til å se details i hver todo
