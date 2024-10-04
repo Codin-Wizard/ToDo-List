@@ -71,6 +71,10 @@ export function renderProjectToDOM(project) {
     projectTitle.textContent = `${project.name}`;
     projectElement.appendChild(projectTitle);
 
+    projectElement.addEventListener('click', () => {
+        projectOnClick(project)
+    })
+
     return projectElement;
 }
 
@@ -89,7 +93,7 @@ export function appendProjectToDOM(project) {
     }
 }
 function createTodosForProject() {
-    
+
 }
 // Function to update the todo display for an existing project
 function updateTodoDisplay(projectElement, project) {
