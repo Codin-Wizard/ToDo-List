@@ -5,6 +5,8 @@ Eg føle og at dette kan se bra ut på cven så jeg skal holde på med dette til
 
 
 
-Antall time counter (Oppdater etter hver økt): 3.5
+Antall time counter (Oppdater etter hver økt): 5
 
-Til neste gang: fortsett med ui til åp lage nye prosjekter 8 sørg for at den riktig parameter) 
+Til neste gang: Tillat bruker å trykke enter hvis de vil bekrefte
+
+Design!!
