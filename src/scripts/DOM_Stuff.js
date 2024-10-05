@@ -20,14 +20,26 @@ export function newProjectUI() {
         const confirmProjectName = document.createElement('button');
         confirmProjectName.textContent = 'ENTER';
 
-        confirmProjectName.addEventListener('click', () => {
+        // Function to handle project creation and close overlay
+    function handleProjectCreation() {
+        if (newProjectName.value.trim()) { // Only proceed if input is not empty
             Project.addNewProject(newProjectName.value);
 
             const overlay = document.getElementById('overlay');
-            document.body.removeChild(createNewProject)
-            document.body.removeChild(overlay)
-        })
+            document.body.removeChild(createNewProject);
+            document.body.removeChild(overlay);
+        }
+    }
 
+    // Click event for confirmation button
+    confirmProjectName.addEventListener('click', handleProjectCreation);
+
+    // Keydown event for Enter key, attached only to the newProjectName input or createNewProject form
+    createNewProject.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            handleProjectCreation();
+        }
+    });
         createNewProject.append(newProjectName,confirmProjectName,exitPopup(createNewProject))
 
         document.body.append(createNewProject)
@@ -75,7 +87,7 @@ function projectOnClick(project){
     });
 
     const addTodo = document.createElement('div');
-    addTodo.classList.add('click')
+    addTodo.classList.add('click', 'add-task')
 
     
 
@@ -171,6 +183,7 @@ function createTodosForProject(project) {
             todoDueDate.value,
             todoPriority.value
         );
+        const overlay = document.getElementById('overlay');
         document.body.removeChild(addTodo)
         document.body.removeChild(overlay)
         // Add the newly created todo to the project
@@ -200,7 +213,10 @@ function updateTodoDisplay(project) {
         todoList.appendChild(todoItem);
     });
     
-    content.appendChild(todoList);
+    const addTaskButton = document.querySelector('.click');
+    if (addTaskButton && !todoList.contains(addTaskButton)) {
+        todoList.appendChild(addTaskButton);
+    }
 }
 
 function createOverlayFor(popup){
