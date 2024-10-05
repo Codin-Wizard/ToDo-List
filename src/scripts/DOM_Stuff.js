@@ -1,5 +1,5 @@
 import Project from "./Projects";
-
+import CreateTodos from "./CreateTodos";
 export function newProjectUI() {
     const createNewProjectButton = document.getElementById('new-project');
 
@@ -55,17 +55,44 @@ function viewDetails(todo) {
 }
 
 function projectOnClick(project){
-    const projectName = document.getElementById('project-name');
-    const todoList = document.createElement('div');
-    projectName.textContent = `${project.name}`;
+    const content = document.getElementById('main-content');
+    const projectHeader = document.createElement('h1');
+    projectHeader.id = 'project-name' 
+
+    const todoList = document.createElement('div'); // Container for the todos
+    todoList.classList.add('todo-list');
+    
 
 
+    //Sett overskriften til prosjekt navnet
+    projectHeader.textContent = `${project.name}`;
+    
+     // Display current todos for the project
+     project.todos.forEach(todo => {
+        const todoItem = document.createElement('div');
+        todoItem.textContent = `Todo: ${todo.title}, Description: ${todo.description}`;
+        todoList.appendChild(todoItem);
+    });
+
+    const addTodo = document.createElement('div');
+    addTodo.classList.add('click')
+
+    
+
+    addTodo.textContent = 'Add Task'
+    addTodo.addEventListener('click', () => {
+        createTodosForProject(project);
+    })
+    //Fjern alt fra siden også legg til alt
+    content.innerHTML = '';
+    content.append(projectHeader,todoList,addTodo)
 }
 
 // Function to render a project and its todos in the DOM
 export function renderProjectToDOM(project) {
     const projectElement = document.createElement('div');
     projectElement.classList.add('project');
+    projectElement.id = `project-${project.name}`; // Set the id based on the project name
 
     const projectTitle = document.createElement('h2');
     projectTitle.textContent = `${project.name}`;
@@ -92,23 +119,88 @@ export function appendProjectToDOM(project) {
         main.appendChild(projectElement);
     }
 }
-function createTodosForProject() {
-
-}
-// Function to update the todo display for an existing project
-function updateTodoDisplay(projectElement, project) {
-    const todoList = projectElement.querySelector(`#todos-${project.name}`);
+function createTodosForProject(project) {
+    // Create a div to hold the form
+    const content = document.getElementById('main-content')
+    const addTodo = document.createElement('div');
+    addTodo.classList.add('details');
     
-    // Clear existing todos (optional)
-    todoList.innerHTML = '';
+    // Title input
+    const todoTitle = document.createElement('input');
+    todoTitle.type = 'text';
+    todoTitle.placeholder = 'Task Title';
 
-    // Re-render todos
-    project.todos.forEach(todo => {
-        const detailsButton = viewDetails(todo); // Assuming this returns a button for viewing details
-        const todoItem = document.createElement('li');
-        todoItem.textContent = `Todo: ${todo.title}, Description: ${todo.description}`;
-        todoList.append(todoItem, detailsButton);
+    // Description input
+    const todoDescription = document.createElement('textarea');
+    todoDescription.placeholder = 'Task Description';
+
+    // Due Date input
+    const todoDueDate = document.createElement('input');
+    todoDueDate.type = 'date';
+
+    // Priority input
+    const todoPriority = document.createElement('select');
+    const priorityOptions = ['High', 'Medium', 'Low'];
+    priorityOptions.forEach(optionText => {
+        const option = document.createElement('option');
+        option.value = optionText;
+        option.textContent = optionText;
+        todoPriority.appendChild(option);
     });
+
+    // Add Button to create a new todo
+    const addButton = document.createElement('button');
+    addButton.textContent = 'Add Todo';
+
+    // Append form elements to the addTodo div
+    addTodo.appendChild(todoTitle);
+    addTodo.appendChild(todoDescription);
+    addTodo.appendChild(todoDueDate);
+    addTodo.appendChild(todoPriority);
+    addTodo.appendChild(addButton);
+
+    // Append the entire form to the DOM (you can append this wherever you want in your UI)
+    createOverlayFor(addTodo)
+    document.body.append(addTodo)
+
+    // Event listener to create a new todo on button click
+    addButton.addEventListener('click', () => {
+        const newTodo = new CreateTodos(
+            todoTitle.value,
+            todoDescription.value,
+            todoDueDate.value,
+            todoPriority.value
+        );
+        document.body.removeChild(addTodo)
+        document.body.removeChild(overlay)
+        // Add the newly created todo to the project
+        project.addTodo(newTodo);
+
+        // Clear the form after adding the todo
+        todoTitle.value = '';
+        todoDescription.value = '';
+        todoDueDate.value = '';
+        todoPriority.value = 'Medium'; // Reset to a default value
+
+        updateTodoDisplay(project)
+    });
+}
+
+function updateTodoDisplay(project) {
+    const content = document.getElementById('main-content');
+    const todoList = document.querySelector('.todo-list');
+    
+    // Clear the current todo list
+    todoList.innerHTML = '';
+    
+    // Re-populate the todo list with updated todos
+    project.todos.forEach(todo => {
+        const todoItem = document.createElement('div');
+        todoItem.textContent = `Todo: ${todo.title}, Description: ${todo.description}`;
+        todoList.appendChild(todoItem);
+    });
+    
+    content.appendChild(todoList);
 }
 
 function createOverlayFor(popup){
