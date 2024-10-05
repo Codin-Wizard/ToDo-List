@@ -1,3 +1,12 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+}
+
 #grid-container{
     display: grid;
     grid-template-areas: 
@@ -5,26 +14,57 @@
     'sidebar main-content'
     ;
     grid-template-columns: 1fr 3fr;
+    grid-template-rows: auto 1fr;
+    height: 100vh;
 }
 #header{
     grid-area: header;
+    display: flex;
+    justify-content: space-around;
+    background-color: rgb(236, 236, 236);
+    border-bottom: 1px solid black;
 }
 
+/*Sidebar*/
 #sidebar{
     grid-area: sidebar;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    padding: 20px;
+    width: 350px;
 }
+
+.sidebar-part {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    padding: 10px; /* Optional padding */
+}
+.title{
+    border-bottom: 1px solid black;
+}
+
 .project:hover, .click:hover{
     cursor: pointer;
     background-color: bisque;
 }
 
+/* Main content */
 #main-content{
     grid-area: main-content;
+    background-color: rgb(236, 236, 236);
+}
+#main-content > * {
+    margin: 30px 20px;
+}
+#project-name {
+    padding: 30px;
+}
+.add-task{
+    padding: 10px;
 }
 
+/*General css */
 .details{
     position: absolute;
     top: 50%;
