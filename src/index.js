@@ -3,12 +3,19 @@ import CreateTodos from './scripts/CreateTodos.js';
 import Project from "./scripts/Projects.js";
 import { newProjectUI } from "./scripts/DOM_Stuff.js";
 
-const project = new Project('skole')
-// Opprett en ny instans av klassen
-const myTodo = new CreateTodos('Dette','gjøre ferdifg','02/10/2025','');
+const project = Project.addNewProject('skole');
+const project1 = Project.addNewProject('jobb'); // Create a new project
+// const myTodo = new CreateTodos('Dette', 'gjøre ferdig', '02/10/2025', ''); // Create a new todo
 
-newProjectUI();
-project.addTodo(myTodo)
+document.addEventListener('DOMContentLoaded', () => {
+    newProjectUI(); // Only set up the UI once when the DOM is fully loaded
+});
 
-project.displayProject();
-console.log(project.showTodos()); 
+// Retrieve all projects
+const allProjects = Project.getProjects();
+console.log(allProjects); 
+
+const test = document.getElementById('test')
+test.addEventListener('click', () => {
+    console.log(allProjects); 
+})

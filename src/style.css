@@ -16,7 +16,10 @@
     flex-direction: column;
     align-items: center;
 }
-
+.project:hover, .click:hover{
+    cursor: pointer;
+    background-color: bisque;
+}
 
 #main-content{
     grid-area: main-content;
@@ -41,4 +44,10 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent grey */
     z-index: 1000; /* Lower than the popup */
+  }
+
+
+  #test{
+    position:fixed ;
+    bottom: 10px;
   }
