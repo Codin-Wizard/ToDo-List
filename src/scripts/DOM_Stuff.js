@@ -86,12 +86,15 @@ function projectOnClick(project){
         todoList.appendChild(todoItem);
     });
 
-    const addTodo = document.createElement('div');
+    const addTodo = document.createElement('button');
     addTodo.classList.add('click', 'add-task')
 
+    const plussIcon = document.createElement('span');
+    plussIcon.classList.add('material-icons-round')
+    plussIcon.textContent = 'add_circle_outlined'
     
 
-    addTodo.textContent = 'Add Task'
+    addTodo.append(plussIcon, ' Add Task')
     addTodo.addEventListener('click', () => {
         createTodosForProject(project);
     })
@@ -106,9 +109,18 @@ export function renderProjectToDOM(project) {
     projectElement.classList.add('project');
     projectElement.id = `project-${project.name}`; // Set the id based on the project name
 
+    //Adds the 3 dots menu
+    const editProject = document.createElement('div');
+    editProject.classList.add('editProject');
+
+    const detailsIcon = document.createElement('span');
+    detailsIcon.classList.add('material-icons-round')
+    detailsIcon.textContent = 'more_vert'
+    editProject.appendChild(detailsIcon)
+    
     const projectTitle = document.createElement('h2');
     projectTitle.textContent = `${project.name}`;
-    projectElement.appendChild(projectTitle);
+    projectElement.append(projectTitle, editProject);
 
     projectElement.addEventListener('click', () => {
         projectOnClick(project)
