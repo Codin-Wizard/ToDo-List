@@ -24,6 +24,8 @@ export default class CreateTodos {
 
         const differenceInDays = Math.ceil(differenceInTime / (1000 * 60 * 60 * 24));
         
+        if(differenceInDays == 0) return 'Due today'
+
         return `In ${differenceInDays} days.`;
     }
 
