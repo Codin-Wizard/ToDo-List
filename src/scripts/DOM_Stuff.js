@@ -66,42 +66,58 @@ function viewDetails(todo) {
     return viewDetailsButton;
 }
 
-function projectOnClick(project){
+function projectOnClick(project) {
     const content = document.getElementById('main-content');
-    const projectHeader = document.createElement('h1');
-    projectHeader.id = 'project-name' 
 
-    const todoList = document.createElement('div'); // Container for the todos
-    todoList.classList.add('todo-list');
-    
+    // Clear existing todos, but keep the "Add Task" button
+    let projectHeader = document.getElementById('project-name');
+    let todoList = document.querySelector('.todo-list');
 
-
-    //Sett overskriften til prosjekt navnet
+    // Hvis overskriften ikke eksisterer, lager vi den på nytt
+    if (!projectHeader) {
+        projectHeader = document.createElement('h1');
+        projectHeader.id = 'project-name';
+        content.appendChild(projectHeader);
+    }
     projectHeader.textContent = `${project.name}`;
-    
-     // Display current todos for the project
-     project.todos.forEach(todo => {
+
+    // Hvis todo-listen ikke eksisterer, lager vi den på nytt
+    if (!todoList) {
+        todoList = document.createElement('div'); // Container for the todos
+        todoList.classList.add('todo-list');
+        content.appendChild(todoList);
+    }
+
+    // Clear todo-listen før vi legger til de nye todo-ene
+    todoList.innerHTML = '';
+
+    // Display current todos for the project
+    project.todos.forEach(todo => {
         const todoItem = document.createElement('div');
         todoItem.textContent = `Todo: ${todo.title}, Description: ${todo.description}`;
         todoList.appendChild(todoItem);
     });
 
-    const addTodo = document.createElement('button');
-    addTodo.classList.add('click', 'add-task')
+    // Ensure "Add Task" button is always present
+    let addTodo = document.querySelector('.add-task');
+    if (!addTodo) {
+        addTodo = document.createElement('button');
+        addTodo.classList.add('click', 'add-task');
 
-    const plussIcon = document.createElement('span');
-    plussIcon.classList.add('material-icons-round')
-    plussIcon.textContent = 'add_circle_outlined'
-    
+        const plussIcon = document.createElement('span');
+        plussIcon.classList.add('material-icons-round');
+        plussIcon.textContent = 'add_circle_outlined';
 
-    addTodo.append(plussIcon, ' Add Task')
-    addTodo.addEventListener('click', () => {
-        createTodosForProject(project);
-    })
-    //Fjern alt fra siden også legg til alt
-    content.innerHTML = '';
-    content.append(projectHeader,todoList,addTodo)
+        addTodo.append(plussIcon, ' Add Task');
+        addTodo.addEventListener('click', () => {
+            createTodosForProject(project);
+        });
+
+        // Append the button only if it doesn't already exist
+        todoList.appendChild(addTodo);
+    }
 }
+
 
 // Function to render a project and its todos in the DOM
 export function renderProjectToDOM(project) {
@@ -117,7 +133,7 @@ export function renderProjectToDOM(project) {
     detailsIcon.classList.add('material-icons-round')
     detailsIcon.textContent = 'more_vert'
     editProject.appendChild(detailsIcon)
-    
+
     const projectTitle = document.createElement('h2');
     projectTitle.textContent = `${project.name}`;
     projectElement.append(projectTitle, editProject);
@@ -212,23 +228,38 @@ function createTodosForProject(project) {
 }
 
 function updateTodoDisplay(project) {
-    const content = document.getElementById('main-content');
     const todoList = document.querySelector('.todo-list');
     
     // Clear the current todo list
     todoList.innerHTML = '';
-    
+
     // Re-populate the todo list with updated todos
     project.todos.forEach(todo => {
         const todoItem = document.createElement('div');
-        todoItem.textContent = `Todo: ${todo.title}, Description: ${todo.description}`;
+        todoItem.classList.add('todo')
+
+        todoItem.textContent = `Todo: ${todo.title},  ${todo.calcDueDate()}`;
         todoList.appendChild(todoItem);
     });
     
-    const addTaskButton = document.querySelector('.click');
-    if (addTaskButton && !todoList.contains(addTaskButton)) {
-        todoList.appendChild(addTaskButton);
+    // Ensure "Add Task" button is always present
+    let addTaskButton = document.querySelector('.click');
+    if (!addTaskButton) {
+        addTaskButton = document.createElement('button');
+        addTaskButton.classList.add('click', 'add-task');
+
+        const plussIcon = document.createElement('span');
+        plussIcon.classList.add('material-icons-round');
+        plussIcon.textContent = 'add_circle_outlined';
+
+        addTaskButton.append(plussIcon, ' Add Task');
+        addTaskButton.addEventListener('click', () => {
+            createTodosForProject(project);
+        });
     }
+
+    // Append "Add Task" button at the end of todo list
+    todoList.appendChild(addTaskButton);
 }
 
 function createOverlayFor(popup){
