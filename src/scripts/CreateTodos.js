@@ -14,6 +14,8 @@ export default class CreateTodos {
     }
 
     calcDueDate() {
+        if(!this.dueDate) return 'No due date';
+
         const currentDay = new Date(); //Dagens dato
         const dueDate = new Date(this.dueDate); //Antar at duedate er i framtiden
 
@@ -21,8 +23,8 @@ export default class CreateTodos {
         const differenceInTime = dueDate - currentDay;
 
         const differenceInDays = Math.ceil(differenceInTime / (1000 * 60 * 60 * 24));
-
-        return `Forfallsdato er om ${differenceInDays} dager.`;
+        
+        return `In ${differenceInDays} days.`;
     }
 
     getPriority() {
