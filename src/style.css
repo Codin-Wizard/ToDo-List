@@ -51,6 +51,7 @@ body{
     display: flex;
     justify-content: space-between;
     width: 100%;
+
     padding: 10px ;
 }
 .project:hover, .click:hover{
@@ -68,7 +69,11 @@ body{
 }
 #project-name {
     padding: 30px;
-    
+    background-color: gray;
+}
+.todo-list{
+    display: flex;
+    flex-direction: column;
 }
 button{
     padding: 10px;
@@ -77,6 +82,11 @@ button{
     border: 0;
     background-color: rgb(236, 236, 236);
     cursor: pointer;
+}
+.add-task {
+    display: flex;
+    width: 100%;
+    padding-left: 45px
 }
 /*General css */
 h2{
