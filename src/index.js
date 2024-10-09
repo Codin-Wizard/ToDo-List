@@ -1,5 +1,4 @@
 import "./style.css";
-import CreateTodos from "./scripts/CreateTodos.js";
 import Project from "./scripts/Projects.js";
 import { newProjectUI } from "./scripts/DOM_Stuff.js";
 

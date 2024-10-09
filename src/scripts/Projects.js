@@ -1,5 +1,4 @@
 import { updateProjectDisplay } from "./DOM_Stuff";
-import CreateTodos from "./CreateTodos";
 const projects = [];
 
 export default class Project {
